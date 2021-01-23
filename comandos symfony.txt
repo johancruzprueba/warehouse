@@ -1,0 +1,9 @@
+symfony new store
+symfony server:start
+
+http://localhost/store/public/index.php
+
+
+
+
+
