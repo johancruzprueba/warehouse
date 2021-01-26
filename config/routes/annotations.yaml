@@ -5,3 +5,13 @@ controllers:
 kernel:
     resource: ../../src/Kernel.php
     type: annotation
+
+delet_category:
+    path:       /category/delet/{id}
+    controller: App\Controller\CategoryController::delet_category
+
+
+delet_product:
+    path:       /product/delet/{id}
+    controller: App\Controller\ProductController::delet_product
+

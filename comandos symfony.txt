@@ -1,7 +1,102 @@
-symfony new store
-symfony server:start
+symfony new store --full
+symfony server:start --no-tls
 
-http://localhost/store/public/index.php
+http://localhost/warehouse/public/index.php
+lohalhost:8000
+
+php bin/console doctrine:database:create
+
+php bin/console make/entity
+
+php bin/console doctrine:schema:update --force
+
+php bin/console make:controller
+
+add category
+
+crea src/Controller/CategoryController.php
+y crea  templates/category/index.html.twig
+
+php bin/console make:form
+
+php bin/console server:stop
+php bin/console server:start --force
+
+symfony server:stop --force
+
+
+    <form id="form{{ category.id }}" style="display: none;" name="category" method="post" >
+
+  	<label for="fname">Código: </label>
+  	<input type="text" id="category_code" name="category_code" value="{{ category.code }}"><br>
+
+  	<label for="name">Nombre: </label>
+  	<input type="text" id="category_name" name="category_name" value="{{ category.name }}"><br>
+
+  	<label for="description">Descripción: </label>
+  	<input type="text" id="category_description" name="category_description" value="{{ category.description }}"><br>
+
+  	<label for="active">Activo</label>
+  	<input type="checkbox" id="category_active" name="category_active" value="1"
+  	 {% set type =  category.active   %}
+  	 {% set checked =  'checked'  %}
+  	{% if type == "1" %}
+  	   {{checked}}
+  	{% endif %} ><br><br>
+
+
+  	<input hidden type="text" id="category_id" name="category_id" value="{{ category.id }}">
+
+
+
+
+
+
+
+  	<input type="Submit" value="Guardar" id="category_submit" name="category[submit]" >
+</form>
+
+
+
+
+
+
+
+
+$category = $em->getRepository(Category::class)->findOneBy(array('id' => $id ));
+
+
+
+$code = $_POST['category_code'];
+$name = $_POST['category_name'];
+$description = $_POST['category_description'];
+$active = $_POST['category_active'];
+
+$form->get('name')->setData($name);
+$form->get('code')->setData($code);
+$form->get('description')->setData($description);
+
+if ($active == "1") {
+	$active = True;
+} else {
+	$active = False;
+}
+
+$form->get('active')->setData($active);
+
+
+
+//$validator = $this->container->get('validator');
+
+
+$category->setName($form["name"]->getData());
+$category->setName($form["code"]->getData());
+$category->setName($form["description"]->getData());
+$category->setName($form["active"]->getData());
+
+
+
+
 
 
 
