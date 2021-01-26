@@ -24,8 +24,8 @@ class Product
      * @Assert\Length(
           *      min = 4,
           *      max = 10,
-          *      minMessage = "Your first name must be at least {{ limit }} characters long",
-          *      maxMessage = "Your first name cannot be longer than {{ limit }} characters"
+          *      minMessage = "su codigo debe tener minimo {{ limit }} characteres ",
+          *      maxMessage = "su codigo name no debe tener más de {{ limit }} characteres"
           * )
      * @Assert\Type(type="alnum")
      */
@@ -35,7 +35,7 @@ class Product
      * @ORM\Column(type="string", length=100, unique=true)
      * @Assert\Length(
          *      min = 4,
-         *      minMessage = "Your first name must be at least {{ limit }} characters long",
+         *      minMessage = "El nombre debe tener minimo {{ limit }} characteres ",
          * )
      * @Assert\NotNull
      * @Assert\Type(type={"alpha", "digit"})
@@ -46,7 +46,7 @@ class Product
      * @ORM\Column(type="string", length=1000)
      * @Assert\Length(
          *      min = 1,
-         *      minMessage = "Your first name must be at least {{ limit }} characters long",
+         *      minMessage = "La descripción debe tener al menos {{ limit }} caracteres",
          * )
      */
     private $description;
@@ -55,7 +55,7 @@ class Product
      * @ORM\Column(type="decimal", precision=12, scale=3)
      * @Assert\Length(
          *      min = 1,
-         *      minMessage = "Your first name must be at least {{ limit }} characters long",
+         *      minMessage = "El precio debe tener minimo {{ limit }} characteres ",
          * )
      */
     private $price;
@@ -64,13 +64,13 @@ class Product
      * @ORM\Column(type="string", length=30)
      * @Assert\Length(
          *      min = 1,
-         *      minMessage = "Your first name must be at least {{ limit }} characters long",
+         *      minMessage = "la marca debe tener al menos {{ limit }} characteres",
          * )
      */
     private $brand;
 
     /**
-     * @ORM\ManyToOne(targetEntity=category::class, inversedBy="no")
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="no")
      * @ORM\JoinColumn(nullable=false)
      */
     private $category;
@@ -119,7 +119,7 @@ class Product
 
     public function getPrice(): ?string
     {
-        return $this->name;
+        return $this->price;
     }
 
     public function setPrice(string $price): self
@@ -131,7 +131,7 @@ class Product
 
     public function getBrand(): ?string
     {
-        return $this->name;
+        return $this->brand;
     }
 
     public function setBrand(string $brand): self

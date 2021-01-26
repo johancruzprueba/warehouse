@@ -54,11 +54,11 @@ class Category
     /**
      * @ORM\OneToMany(targetEntity=Product::class, mappedBy="category")
      */
-    private $no;
+    private $product;
 
     public function __construct()
     {
-        $this->no = new ArrayCollection();
+        $this->product = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -124,27 +124,27 @@ class Category
    /**
     * @return Collection|Product[]
     */
-   public function getNo(): Collection
+   public function getProduct(): Collection
    {
-       return $this->no;
+       return $this->product;
    }
 
-   public function addNo(Product $no): self
+   public function addProduct(Product $product): self
    {
-       if (!$this->no->contains($no)) {
-           $this->no[] = $no;
-           $no->setCategory($this);
+       if (!$this->product->contains($product)) {
+           $this->product[] = $product;
+           $product->setCategory($this);
        }
 
        return $this;
    }
 
-   public function removeNo(Product $no): self
+   public function removeProduct(Product $product): self
    {
-       if ($this->no->removeElement($no)) {
+       if ($this->product->removeElement($product)) {
            // set the owning side to null (unless already changed)
-           if ($no->getCategory() === $this) {
-               $no->setCategory(null);
+           if ($producto->getCategory() === $this) {
+               $product->setCategory(null);
            }
        }
 

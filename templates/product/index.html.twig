@@ -1,4 +1,173 @@
 {% extends 'base.html.twig' %}
-{% block body %}
 
+{% block title %}Productos{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 900px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    button:hover {text-decoration: underline;}
+</style>
+
+<div align="center">
+
+<a  href="/category/add">Agregar categoría</a>
+<a  href="/product">Listar productos</a>
+<a  href="/product/add">Agregar producto</a>
+
+</style>
+
+{% for message in app.flashes('exito') %}
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
+{% endfor %}
+
+<div class="example-wrapper">
+
+
+
+    <h1>Productos: ✅</h1>
+
+    {% for product   in products %}
+
+    <p> código: {{ product.code }},  Nombre: {{ product.name }},
+    Descripción {{ product.description }},
+
+    <button id="{{ product.id }}" onclick="view(this.id)">Editar</button>
+
+
+    <button style="background-color:tomato;" onclick="location.href='/product/delet/{{ product.id }}'">Eliminar</button>
+
+    </p>
+
+
+
+	{{ form_start(forms[loop.index-1 ]) }}
+
+	<div class="my-custom-class-for-errors">
+	        {{ form_errors(forms[loop.index-1 ]) }}
+	    </div>
+
+	<div id="form{{ product.id }}" style="display: none;">
+
+
+	<div class="col"> {{ form_row(forms[loop.index-1 ].code,
+	{'label': 'Código' , 'value': product.code}) }}
+	 </div>
+
+	<div class="col">
+	        {{ form_row(forms[loop.index-1 ].name, {'label': 'Nombre', 'value': product.name}) }}
+	 </div>
+
+	 <div class="col">
+	 {{ form_row(forms[loop.index-1 ].description, {'label': 'Descripción','value': product.description}) }}
+	 </div>
+
+	 <div class="col">
+	 {{ form_row(forms[loop.index-1 ].price, {'label': 'Precio','value': product.price}) }}
+	 </div>
+
+	 <div class="col">
+	 {{ form_row(forms[loop.index-1 ].brand, {'label': 'Marca','value': product.brand}) }}
+	 </div>
+
+
+	 <div class="col">
+	 {{ form_row(forms[loop.index-1 ].category, {'label': 'Categoria'}) }}
+	 </div>
+
+
+
+
+
+
+
+	 <input type="text" id="product_id" hidden name="product_id" value="{{product.id}}" />
+
+
+
+
+
+	 <div class="col">
+	 {{ form_row(forms[loop.index-1 ].submit, {'label': 'Enviar','required': 'false'}) }}
+	 </div>
+
+
+
+	 </div>
+
+
+	{{ form_end(forms[loop.index-1 ]) }}
+
+
+	<form id="form-{{ product.id }}" hiden name="product" method="post" >
+
+	<input hidden type="text" id="product_id" name="product_id" value="{{ product.id }}">
+
+	</form>
+
+
+
+    {% endfor %}
+
+
+
+
+
+</div>
+
+<script>
+function view(id) {
+  var x = document.getElementById("form"+id);
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+	var categories = Object();;
+
+	{% for category in del_categories %}
+	categories["{{ category.id }}"]=1;
+	{% endfor %}
+
+
+   var selectobject = document.getElementById("product_category");
+   for (var i=0; i<selectobject.length; i++) {
+
+   		console.log("value",selectobject.options[i].value.toString()," ",categories, selectobject.options[i].value.toString() in categories, typeof selectobject.options[i].value.toString() )
+
+	   	if (selectobject.options[i].value.toString() in categories ) {
+	     	selectobject.remove(i);
+	     	}
+   	}
+
+
+   	var els = document.getElementsByName("product[category]");
+   	Array.prototype.forEach.call(els, function(el) {
+
+   		console.log("ciclo ");
+
+	   for (var i=0; i<el.length; i++) {
+
+		   	if (el.options[i].value.toString() in categories ) {
+		     	el.remove(i);
+		     	}
+	   	}
+
+
+   	});
+
+
+
+
+}, false);
+
+
+</script>
 {% endblock %}
